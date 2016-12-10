@@ -2,15 +2,15 @@
 # @Author: zhangwei
 # @Date:   2016-12-10 19:25:35
 # @Last Modified by:   zhangwei
-# @Last Modified time: 2016-12-10 20:44:14
+# @Last Modified time: 2016-12-10 22:01:09
 from django.shortcuts import render,HttpResponse,HttpResponseRedirect
 from django.http import request,JsonResponse
 from forms import MyLogin
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login,logout,authenticate
-from models import Commodity
-from forms import CommodityForm
+from models import Commodity,CategoryModel,TagModel
+from forms import CommodityForm,CategoryForm,TagForm
 # Create your views here.
 
 def index_login(request):
@@ -71,13 +71,56 @@ def createCommodity(request):
 			commodityImg = commodity.cleaned_data.get('commodityImg',None) 
 			commodityStock = commodity.cleaned_data.get('commodityStock',None) 
 			commodityPrice = commodity.cleaned_data.get('commodityPrice',None) 
+			categoryId = commodity.cleaned_data.get('categoryName',None)
+			tag = request.POST.getlist('tags',None)
+			category = categoryModel.objects.filter(pk=categoryId).first()
 			commodityModel = Commodity(commodityName=commodityName,
 				commodityDes=commodityDes,
 				commodityImg=commodityImg,
 				commodityStock=commodityStock,
 				commodityPrice=commodityPrice,
+				categoryName=categoryName
 				)
 			commodityModel.save()
+			tagModel = TagModel.objects.filter(pk__in=tag)
+			commodityModel.tag.set(tagModel)
 			return JsonResponse({'message':u'创建成功'})
 		else:
 			return JsonResponse({'error':errorMess(commodity.errors)})
+
+
+@login_required
+def addCategory(request):
+	if request.method == 'POST'
+		form = CategoryForm(request.POST)
+		if form.is_valid():
+			categoryName = form.cleaned_data.get('categoryName',None)
+			oldcategory = categoryModel.objects.filter(name=categoryName).first()
+			if not oldcategory:
+				categoryModel = CategoryModel(name=categoryName)
+				categoryModel.save()
+				return JsonResponse({'code':200})
+			else:
+				return JsonResponse({'error':u'不能创建同名的分类'})
+		else:
+			return JsonResponse({'error':form.errors})
+
+
+@login_required
+def addTag(request):
+	if request.method == 'POST':
+		form = TagForm(request.POST)
+		if form.is_valid():
+			tagName = form.cleaned_data.get('tagName',None)
+			oldtag = TagModel.objects.filter(tagName=tagName).first()
+			if not oldtag:
+				tagModel = TagModel(tagName=tagName)
+				tagModel.save()
+				return JsonResponse({'code':200})
+			else:
+				return JsonResponse({'error':u'不能创建同名的标签'})
+		else:
+			return JsonResponse({'error':form.errors})
+
+
+

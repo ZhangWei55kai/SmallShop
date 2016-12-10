@@ -2,7 +2,7 @@
 # @Author: zhangwei
 # @Date:   2016-12-10 18:57:34
 # @Last Modified by:   zhangwei
-# @Last Modified time: 2016-12-10 20:32:34
+# @Last Modified time: 2016-12-10 22:02:31
 from django import forms
 from models import Commodity
 class MyLogin(forms.Form):
@@ -15,6 +15,7 @@ class CommodityForm(forms.Form):
 	commodityImg = forms.URLField()
 	commodityStock = forms.IntegerField()
 	commodityPrice = forms.IntegerField()
+	categoryName = forms.IntegerField(required=True)
 
 	def clean_commodityName(self):
 		commodityName = self.cleaned_data.get('commodityName',None)
@@ -41,3 +42,9 @@ class CommodityForm(forms.Form):
 		if not commodityPrice:
 			raise forms.ValidationError(u'价格不能为空',code = 'min_length')
 		return commodityPrice
+
+class CategoryForm(forms.Form):
+	categoryName = forms.CharField(max_length=20)
+
+class TagForm(forms.Form):
+	tagName = forms.CharField(max_length=30)
