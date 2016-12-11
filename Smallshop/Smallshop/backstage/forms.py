@@ -2,7 +2,7 @@
 # @Author: zhangwei
 # @Date:   2016-12-10 18:57:34
 # @Last Modified by:   zhangwei
-# @Last Modified time: 2016-12-10 22:02:31
+# @Last Modified time: 2016-12-11 15:15:44
 from django import forms
 from models import Commodity
 class MyLogin(forms.Form):
@@ -15,11 +15,10 @@ class CommodityForm(forms.Form):
 	commodityImg = forms.URLField()
 	commodityStock = forms.IntegerField()
 	commodityPrice = forms.IntegerField()
-	categoryName = forms.IntegerField(required=True)
+	categoryId = forms.IntegerField(required=True)
 
 	def clean_commodityName(self):
 		commodityName = self.cleaned_data.get('commodityName',None)
-		print commodityName
 		oldCommodity = Commodity.objects.filter(commodityName__contains=commodityName).first()
 		if oldCommodity:
 			raise forms.ValidationError(u'商品名称不能重复',code = 'repeatError')

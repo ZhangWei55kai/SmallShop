@@ -12,7 +12,7 @@ class Commodity(models.Model):
 	commodityPrice = models.IntegerField()
 	commodityCtime = models.DateField(auto_now_add=True)
 	commondityCate = models.ForeignKey('CategoryModel')
-	commondityTag = models.ManyToManyField('TagModel',null=True)
+	commondityTag = models.ManyToManyField('TagModel',blank=True)
 
 class CategoryModel(models.Model):
 	name = models.CharField(max_length=20,unique=True)

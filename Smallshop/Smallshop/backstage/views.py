@@ -2,7 +2,7 @@
 # @Author: zhangwei
 # @Date:   2016-12-10 19:25:35
 # @Last Modified by:   zhangwei
-# @Last Modified time: 2016-12-10 22:01:09
+# @Last Modified time: 2016-12-11 15:25:07
 from django.shortcuts import render,HttpResponse,HttpResponseRedirect
 from django.http import request,JsonResponse
 from forms import MyLogin
@@ -58,44 +58,44 @@ def errorMess(error):
 	return errorm
 
 	
-@login_required
+# @login_required
 def createCommodity(request):
 	if request.method == 'GET':
 		return render(request,'html')
 	else:
 		commodity = CommodityForm(request.POST)
-		commodityName = request.POST.get('commodityName',None)
 		if commodity.is_valid():
 			commodityName = commodity.cleaned_data.get('commodityName',None) 
 			commodityDes = commodity.cleaned_data.get('commodityDes',None) 
 			commodityImg = commodity.cleaned_data.get('commodityImg',None) 
 			commodityStock = commodity.cleaned_data.get('commodityStock',None) 
 			commodityPrice = commodity.cleaned_data.get('commodityPrice',None) 
-			categoryId = commodity.cleaned_data.get('categoryName',None)
+			categoryId = commodity.cleaned_data.get('categoryId',None)
 			tag = request.POST.getlist('tags',None)
-			category = categoryModel.objects.filter(pk=categoryId).first()
+			print tag
+			category = CategoryModel.objects.filter(pk=categoryId).first()
 			commodityModel = Commodity(commodityName=commodityName,
 				commodityDes=commodityDes,
 				commodityImg=commodityImg,
 				commodityStock=commodityStock,
 				commodityPrice=commodityPrice,
-				categoryName=categoryName
+				commondityCate=category
 				)
 			commodityModel.save()
 			tagModel = TagModel.objects.filter(pk__in=tag)
-			commodityModel.tag.set(tagModel)
+			commodityModel.commondityTag.set(tagModel)
 			return JsonResponse({'message':u'创建成功'})
 		else:
 			return JsonResponse({'error':errorMess(commodity.errors)})
 
 
-@login_required
+# @login_required
 def addCategory(request):
-	if request.method == 'POST'
+	if request.method == 'POST':
 		form = CategoryForm(request.POST)
 		if form.is_valid():
 			categoryName = form.cleaned_data.get('categoryName',None)
-			oldcategory = categoryModel.objects.filter(name=categoryName).first()
+			oldcategory = CategoryModel.objects.filter(name=categoryName).first()
 			if not oldcategory:
 				categoryModel = CategoryModel(name=categoryName)
 				categoryModel.save()
@@ -103,10 +103,10 @@ def addCategory(request):
 			else:
 				return JsonResponse({'error':u'不能创建同名的分类'})
 		else:
-			return JsonResponse({'error':form.errors})
+			return JsonResponse({'error':errorMess(form.errors)})
 
 
-@login_required
+# @login_required
 def addTag(request):
 	if request.method == 'POST':
 		form = TagForm(request.POST)
@@ -120,7 +120,7 @@ def addTag(request):
 			else:
 				return JsonResponse({'error':u'不能创建同名的标签'})
 		else:
-			return JsonResponse({'error':form.errors})
+			return JsonResponse({'error':errorMess(form.errors)})
 
 
 
