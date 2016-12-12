@@ -1,5 +1,5 @@
 #coding:utf-8
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect,reverse
 from django.http import request,JsonResponse
 from forms import Frontuser_login,Frontuser_reg
 from utils import login,logout
@@ -7,7 +7,6 @@ from decorators import front_login_required
 from hashs import make_password
 from models import FrontUser
 from backstage.models import Commodity,ShoppingCart
-from django.db.models import Q
 import configs
 # Create your views here.
 def front_register(request):
@@ -53,13 +52,21 @@ def front_logout(request):
 	return redirect('login.html')
 
 @front_login_required
-def shopCart(request,commodityId):
+def shopCart(request):
 	if request.method == 'GET':
 		userId = request.session[configs.LOGINED_KEY]
-		shopcart = ShoppingCart.objects.filter(Q(user=userId)&Q(commodity=commodityId))
-		
+		shopcart = ShoppingCart.objects.filter(user=userId).all()
+		shopcartList = shopcart.commodity
+		commodity = Commodity.objects.filter(uid__in=shopcartList)
+		context = {'commodity':commodity}
+		return render(request,'shopCart.html',context)
 
-		return render(request,'shopCart.html')
-	else:
-		pass
+@front_login_required
+def addShop(request,commodityId):
+#把商品的ID放在a标签中直接放入购物车
+	if request.method == 'GET':
+		userId = request.session[configs.LOGINED_KEY]
+		shoppingcart = ShoppingCart(commodity=commodityId,user=userId)
+		shoppingcart.save()
+		return redirect(reverse('shop_cart'))
 

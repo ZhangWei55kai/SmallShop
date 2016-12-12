@@ -2,7 +2,7 @@
 # @Author: zhangwei
 # @Date:   2016-12-12 21:22:50
 # @Last Modified by:   zhangwei
-# @Last Modified time: 2016-12-12 21:47:14
+# @Last Modified time: 2016-12-12 23:59:03
 from django import forms
 
 class Frontuser_login(forms.Form):
@@ -16,7 +16,7 @@ class Frontuser_reg(forms.Form):
 	password = forms.CharField(min_length=6)
 	address = forms.CharField(min_length=3)
 
-	def clean_commodityName(self):
+	def clean_username(self):
 		username = self.cleaned_data.get('username',None)
 		oldUsername = Commodity.objects.filter(username__contains=username).first()
 		if oldUsername:
