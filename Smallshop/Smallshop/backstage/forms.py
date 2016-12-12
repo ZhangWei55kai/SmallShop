@@ -2,7 +2,7 @@
 # @Author: zhangwei
 # @Date:   2016-12-10 18:57:34
 # @Last Modified by:   zhangwei
-# @Last Modified time: 2016-12-11 15:15:44
+# @Last Modified time: 2016-12-12 22:25:56
 from django import forms
 from models import Commodity
 class MyLogin(forms.Form):
@@ -14,7 +14,7 @@ class CommodityForm(forms.Form):
 	commodityDes = forms.CharField()
 	commodityImg = forms.URLField()
 	commodityStock = forms.IntegerField()
-	commodityPrice = forms.IntegerField()
+	commodityPrice = forms.DecimalField()
 	categoryId = forms.IntegerField(required=True)
 
 	def clean_commodityName(self):

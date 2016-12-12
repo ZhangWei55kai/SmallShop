@@ -2,11 +2,11 @@
 # @Author: zhangwei
 # @Date:   2016-12-11 22:44:24
 # @Last Modified by:   zhangwei
-# @Last Modified time: 2016-12-11 22:57:21
+# @Last Modified time: 2016-12-12 22:57:37
 import hashlib
 import configs
 
-def make_password(raw_passwrd,salt=None):
+def make_password(raw_password,salt=None):
 	if not salt:
 		salt = configs.PASSWORD_SALT
 	hash_password = hashlib.md5(configs.PASSWORD_SALT+raw_password).hexdigest()

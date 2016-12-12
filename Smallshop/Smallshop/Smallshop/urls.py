@@ -20,4 +20,5 @@ from backstage import views
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^backstage/',include('backstage.urls')),
+    url(r'^front/',include('front.urls')),
 ]
