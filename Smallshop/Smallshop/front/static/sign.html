@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<!-- saved from url=(0032)http://www.urselect.com/register -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>SmallShop用户注册</title>
+    
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta property="qc:admins" content="52516704676523545346375">
+    <meta property="wb:webmaster" content="7c478538ace87087">
+    
+    <link href="./css/global.css" rel="stylesheet" type="text/css">
+<link href="./css/dialog.css" rel="stylesheet" type="text/css">
+<link href="./css/login.css" rel="stylesheet" type="text/css">
+<link href="./css/reg.css" rel="stylesheet" type="text/css">
+<script src="./js/jquery-1.8.1.min.js"></script>
+<script src="./js/reg.js"></script>
+<script src="./js/reg-exp.js"></script>
+</head>
+<body>
+    
+    
+
+
+<!-- 头部 -->
+<div id="header">
+    <div class="hd_bar">
+        <div class="bd">
+            <div class="logo">
+                  <img src="./img/logo.png" title="SmallShop"  height="58px"></a>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <script type="text/javascript">
+        $(function () {
+            $("#codeImage").bind("click", function () {
+                change();
+            });
+        });
+        function change() {
+            var validCode = $("#codeImage");
+            validCode.attr("src", "/getvalidatecode?time=" + (new Date()).getTime());
+        }
+    </script>
+
+<div id="main" class="cle">
+    <div class="box-pic">
+        <div class="img" id="left_pic">
+            <img src="./img/login-box-bg.jpg" width="500" height="450">
+        </div>
+    </div>
+    <div class="g_box">
+        <div id="register_box">
+            <input type="hidden" value="" id="validate">
+            <h2>
+                <div class="trig">
+                    已有账号?
+                    <a href="login.html" class="trigger-box">点击登录</a>
+                </div>
+                注册
+            </h2>
+            <div class="register_infor">
+<form action="#" method="post">                    <ul>
+                        <li class="input_box">
+                            <input id="AccountName" name="AccountName" placeholder="手机" type="text" value="">
+                        </li>
+                        <li class="error_box">
+                            <em>
+                                <span class="field-validation-valid" data-valmsg-for="AccountName" data-valmsg-replace="true"></span>
+                            </em>
+                        </li>
+                        <li class="input_box">
+                            <input data-val="true" data-val-length="密码长度至少6 个字符" data-val-length-max="999" data-val-length-min="6" data-val-required="请输入密码" id="Password" name="Password" placeholder="密码" type="password">
+                        </li>
+                        <li class="error_box">
+                            <em>
+                                <span class="field-validation-valid" data-valmsg-for="Password" data-valmsg-replace="true"></span>
+                            </em>
+                        </li>
+                        <li class="input_box">
+                            <input data-val="true" data-val-equalto="两次密码不匹配，请重新输入" data-val-equalto-other="*.Password" data-val-required="请输入确认密码" id="ConfirmPassword" name="ConfirmPassword" placeholder="确认密码" type="password">
+                        </li>
+                        <li class="error_box">
+                            <em>
+                                <span class="field-validation-valid" data-valmsg-for="ConfirmPassword" data-valmsg-replace="true"></span>
+                            </em>
+                        </li>
+
+                            <li class="security_code input_box">
+                                <input id="ValidateCode" maxlength="6" name="ValidateCode" placeholder="验证码" type="text" value="">
+                                <span class="error_icon"></span>
+                                <img src="./css/getvalidatecode" id="codeImage">
+                                <a href="javascript:change();" id="change">换一张</a>
+                            </li>
+                            <li class="error_box">
+                                <em>
+                                    <span class="field-validation-valid" data-valmsg-for="ValidateCode" data-valmsg-replace="true"></span>
+                                </em>
+                            </li>
+                            <li class="security_code input_box">
+                                <input id="Token" maxlength="6" name="Token" placeholder="短信验证" type="text" value="">
+                                <span class="error_icon"></span>
+                                <a href="javascript:void(0);" id="send_security_code" class="graybtn" style="visibility: visible;">获取短信验证码</a>
+                            </li>
+                            <li class="error_box">
+                                <em>
+                                    <span class="field-validation-valid" data-valmsg-for="Token" data-valmsg-replace="true"></span>
+                                </em>
+                            </li>
+                        
+                            <script type="text/javascript">
+                                $(document).ready(function () {
+                                    $('#register-button').click(function () {
+                                        if ($('#accept-privacy-policy').is(':checked')) {
+                                            //do some stuff
+                                            return true;
+                                        }
+                                        else {
+                                            displayPopupWarn('请接受我们的服务协议', function () { return true; }, 3500);
+                                            return false;
+                                        }
+                                    });
+                                });
+                            </script>
+                            <li class="lizi_law">
+                                <label>
+                                    <input type="checkbox" id="accept-privacy-policy" name="readme" checked="checked" value="1">
+                                    我已阅读并接受
+                                    <a href="javascript:;" target="_blank">《服务协议》</a>
+                                </label>
+                            </li>
+                            <li class="error_box">
+                                <em></em>
+                            </li>
+                        <li class="go2register">
+                            <input type="submit" id="register-button" class="btn submit_btn" value="同意协议并注册">
+                        </li>
+                    </ul>
+</form>            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div id="footer">
+    <div class="ft_main">
+        <div class="ft_nav">
+            <a href="http://www.urselect.com/t/aboutus" class="noborder">关于我们</a>
+            <cite>/</cite>
+            <a href="http://www.urselect.com/t/sysdeliver_alipay">配送政策</a>
+            <cite>/</cite>
+            <a href="http://www.urselect.com/t/joinus">加入我们</a>
+            <cite>/</cite>
+            <a href="http://www.urselect.com/t/aboutus" target="_blank">帮助中心</a>
+            <cite>/</cite>
+            <a href="http://www.urselect.com/jieshao/daili" target="_blank">加盟代理</a>
+            <cite>/</cite>
+            <a href="http://www.urselect.com/sitemap">站点地图</a>
+            <cite>/</cite>
+            <a href="http://www.urselect.com/t/contactus">联系我们</a>
+            <cite>/</cite>
+            <a href="http://www.urselect.com/t/links">友情链接</a>
+        </div>
+        <div class="ft_txt">
+            <p>
+                Copyright 2016, 广州商宇网络科技有限公司 URSELECT.COM 
+                    备案号：<a rel="nofollow" href="http://www.miitbeian.gov.cn/" target="_blank">粤ICP备14084822号-2</a>
+            </p>
+            <p class="ft_contact">
+                    <span>服务时间：09:00-18:00 (法定节假日除外)</span>
+                                    <span class="ft_phone">
+                        客服热线:
+                        <em>020-28170928</em>
+                    </span>
+            </p>
+            <p class="flink">
+                <a href="http://www.orchardch.com/" target="_blank">Orchard中文</a>
+                <a href="http://www.58img.com/" target="_blank">Web前端资源网</a>
+                <a href="http://www.itjiangtan.com/" target="_blank">IT讲坛</a>
+                <a href="http://cuiqingcai.com/" target="_blank">静觅</a>
+				<a href="http://www.urselect.com/" target="_blank">广州微商城开发</a>
+                <a href="http://gw.urselect.com/" target="_blank">商宇科技</a>
+                <a href="http://www.72byte.com/thread" target="_blank">72变</a>
+                <a href="http://www.maidouvr.com/" target="_blank">麦逗VR</a>
+				<a href="http://z5a.com/" target="_blank">智能产品网</a>
+				<a href="http://www.cnfeelings.com/" target="_blank">情怀网</a>
+				<a href="http://www.xp510.com/" target="_blank">系统之家</a>
+				<a href="http://www.urshop.cn/" target="_blank">UrShop</a>
+				<a href="http://www.cssmoban.com/" target="_blank">模板之家</a>
+				<a href="http://www.eecco.co/" target="_blank">EECCO合伙人</a>
+				<a href="http://www.urselect.com/" target="_blank">商城模板</a>
+				<a href="http://www.mb5u.com/" target="_blank">模板无忧</a>
+				<a href="http://www.keduoxiao.com/" target="_blank">客多销</a>
+				<a href="http://www.cnnynet.com/" target="_blank">中国农业网</a>
+
+            </p>
+        </div>
+</div>
+
+
