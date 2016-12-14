@@ -21,7 +21,6 @@ class FrontUser(models.Model):
 	def __init__(self,*args,**kwargs):
 		if 'password' in kwargs:
 			password = kwargs['password']
-			print password
 			hash_password = hashs.make_password(password)
 			kwargs['password'] = hash_password
 		super(FrontUser,self).__init__(*args,**kwargs)

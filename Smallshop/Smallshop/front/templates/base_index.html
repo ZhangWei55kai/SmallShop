@@ -1,0 +1,42 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+	{% block headblock %}
+	<head>
+		<meta charset="utf-8" />
+		<title>首页</title>
+		<link rel="stylesheet" href="{% static "css/swiper.min.css" %}" />
+		<link rel="stylesheet" href="{% static "css/first_page.css"%}" />		
+	</head>
+	{% endblock headblock %}
+	<body>
+		<div class="imgInfo"><img src='{% static "img/camp.jpg" %}' class="campImg" /></div>
+		<div class="yimi_head_part">
+		</div>
+		<div class="search_box">
+			<div class="search_wai">
+				<div class="search_left"><img class="Small_logo" src="{% static "img/logo.png" %}" alt="logo"></div>
+				<div class="search_mid">
+					<input type='text' class="search" /><a class="buttom_a" href='#'><img class='search_buttom' src='{% static "img/search.png" %}' alt='搜索'/></a>
+					<ul class="cav">
+						<li>首页</li>
+						<li>首页</li>
+						<li>首页</li>
+						<li>首页</li>
+						<li>首页</li>
+						<li>首页</li>
+						<li>首页</li>
+						<li>首页</li>
+					</ul>
+				</div>
+
+				<div class="search_right">
+					<a href="#"><div class="shop_Cart"><img class="cart_logo" src="{% static "img/ShopCart.png" %} " alt="shopcart" /><span>我的购物车</span></div></a>
+				</div>
+			</div>
+		</div>
+		{% block bodyblock %}
+			
+		{% endblock bodyblock %}
+	</body>
+</html>

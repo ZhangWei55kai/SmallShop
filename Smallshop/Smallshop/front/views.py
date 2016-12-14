@@ -1,6 +1,6 @@
 #coding:utf-8
 from django.shortcuts import render,redirect,reverse
-from django.http import request,JsonResponse
+from django.http import request,JsonResponse,HttpResponse
 from forms import Frontuser_login,Frontuser_reg
 from utils import login,logout
 from decorators import front_login_required
@@ -11,11 +11,11 @@ import configs
 # Create your views here.
 def front_register(request):
 	if request.method == 'GET':
-		return render(request,'register.html')
+		return render(request,'sign.html')
 	else:
 		frontReg_form = Frontuser_reg(request.POST)
 		if frontReg_form.is_valid():
-			name = frontReg_form.cleaned_data.get('username',None)
+			name = frontReg_form.cleaned_data.get('name',None)
 			email = frontReg_form.cleaned_data.get('email',None)
 			username = frontReg_form.cleaned_data.get('username',None)
 			password = frontReg_form.cleaned_data.get('password',None)
@@ -26,19 +26,25 @@ def front_register(request):
 								  password=password,
 								  address=address)
 			frontUser.save()
+			login(request,username,password)
 			return JsonResponse({'code':200})
 		else:
 			return JsonResponse({'error':frontReg_form.errors})
 
 def front_login(request):
 	if request.method == 'GET':
-		return render(request,'html')
+		return render(request,'login.html')
 	else:
 		frontUser_form = Frontuser_login(request.POST)
 		if frontUser_form.is_valid():
 			username = frontUser_form.cleaned_data.get('username',None)
 			password = frontUser_form.cleaned_data.get('password',None)
+			remember = frontUser_form.cleaned_data.get('remember',None)
 			if login(request,username,password):
+				if remember:
+					request.session.set_expiry(600)
+				else:
+					request.session.set_expiry(0)
 				return JsonResponse({'message':u'登陆成功'})
 			else:
 				return JsonResponse({'error':u'用户名或密码错误'})
@@ -69,4 +75,13 @@ def addShop(request,commodityId):
 		shoppingcart = ShoppingCart(commodity=commodityId,user=userId)
 		shoppingcart.save()
 		return redirect(reverse('shop_cart'))
+
+#首页
+@front_login_required
+def front_index(request):
+	if request.method == 'GET':
+		print request.username
+		return render(request,'index.html')
+
+
 

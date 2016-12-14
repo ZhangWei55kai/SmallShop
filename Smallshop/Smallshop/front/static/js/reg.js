@@ -84,3 +84,45 @@ function showcode() {
         $sendcode.removeClass("disabled")
     }
 }
+$(document).ready(function(){
+    $('#register-button').click(function(event){
+        event.preventDefault();
+        var name =$('#Name').val();
+        var email =$('#Email').val();
+        var username=$('#AccountName').val();
+        console.log(username)
+        var password=$('#Password').val();
+        var repassword =$('#ConfirmPassword').val();
+        var address =$('#address').val();
+        ssajax.ajax({
+            'url':'/front/register/',
+            'type':'POST',
+            'data':{
+                'name':name,
+                'email':email,
+                'username':username,
+                'password':password,
+                'repassword':repassword,
+                'address':address
+
+                },
+                'success':function(data){
+                    console.log(data)
+                    if(data['code'] == '200')
+                    {
+                        alert('注册成功');
+                        window.location.href = '/front/index';
+                    }
+                    if (data['error'])
+                    {
+                        alert('请正确填写信息')
+
+                    }
+                    
+                },
+                'error':function(error){
+                    console.log(error);
+                },
+        });
+    });
+});

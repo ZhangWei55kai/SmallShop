@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <!-- saved from url=(0032)http://www.urselect.com/register -->
 <html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -8,13 +9,14 @@
     <meta property="qc:admins" content="52516704676523545346375">
     <meta property="wb:webmaster" content="7c478538ace87087">
     
-    <link href="./css/global.css" rel="stylesheet" type="text/css">
-<link href="./css/dialog.css" rel="stylesheet" type="text/css">
-<link href="./css/login.css" rel="stylesheet" type="text/css">
-<link href="./css/reg.css" rel="stylesheet" type="text/css">
-<script src="./js/jquery-1.8.1.min.js"></script>
-<script src="./js/reg.js"></script>
-<script src="./js/reg-exp.js"></script>
+    <link href="{% static "./css/global.css" %}" rel="stylesheet" type="text/css">
+<link href="{% static "./css/dialog.css" %}" rel="stylesheet" type="text/css">
+<link href="{% static "./css/login.css" %}" rel="stylesheet" type="text/css">
+<link href="{% static "./css/reg.css" %}" rel="stylesheet" type="text/css">
+<script src="{% static "./js/jquery-1.8.1.min.js" %}"></script>
+<script src="{% static "./js/reg.js" %}"></script>
+<script src="{% static "./js/reg-exp.js" %}"></script>
+<script src="{% static "./js/ssajax.js" %}" type="text/javascript"></script>
 </head>
 <body>
     
@@ -26,7 +28,7 @@
     <div class="hd_bar">
         <div class="bd">
             <div class="logo">
-                  <img src="./img/logo.png" title="SmallShop"  height="58px"></a>
+                  <img src="{% static "./img/logo.png" %}" title="SmallShop"  height="58px"></a>
             </div>
         </div>
     </div>
@@ -47,7 +49,7 @@
 <div id="main" class="cle">
     <div class="box-pic">
         <div class="img" id="left_pic">
-            <img src="./img/login-box-bg.jpg" width="500" height="450">
+            <img src="{% static "./img/login-box-bg.jpg" %}" width="500" height="450">
         </div>
     </div>
     <div class="g_box">
@@ -56,14 +58,25 @@
             <h2>
                 <div class="trig">
                     已有账号?
-                    <a href="login.html" class="trigger-box">点击登录</a>
+                    <a href="{% url 'front_login' %}" class="trigger-box">点击登录</a>
                 </div>
                 注册
             </h2>
             <div class="register_infor">
-<form action="#" method="post">                    <ul>
-                        <li class="input_box">
-                            <input id="AccountName" name="AccountName" placeholder="手机" type="text" value="">
+<form action="" method="POST">
+{% csrf_token %}
+                    <ul>
+                        <li class="input_box" style="margin-bottom:17px">
+                            <input id="Name" name="Name" placeholder="姓名" type="text" value="">
+                        </li>
+                        <li class="input_box" style="margin-bottom:17px">
+                            <input id="AccountName" name="AccountName" placeholder="用户名" type="text" value="">
+                        </li>
+                        <li class="input_box" style="margin-bottom:17px">
+                            <input  id="Email" name="Email" placeholder="Email" type="text">
+                        </li>
+                        <li class="input_box" style="margin-bottom:17px">
+                            <input  id="address" name="address" placeholder="地址" type="text">
                         </li>
                         <li class="error_box">
                             <em>
@@ -75,7 +88,7 @@
                         </li>
                         <li class="error_box">
                             <em>
-                                <span class="field-validation-valid" data-valmsg-for="Password" data-valmsg-replace="true"></span>
+                                <span class="field-validation-valid" data-valmsg-for="rePassword" data-valmsg-replace="true"></span>
                             </em>
                         </li>
                         <li class="input_box">
@@ -86,7 +99,7 @@
                                 <span class="field-validation-valid" data-valmsg-for="ConfirmPassword" data-valmsg-replace="true"></span>
                             </em>
                         </li>
-
+                           {% comment %}
                             <li class="security_code input_box">
                                 <input id="ValidateCode" maxlength="6" name="ValidateCode" placeholder="验证码" type="text" value="">
                                 <span class="error_icon"></span>
@@ -108,7 +121,7 @@
                                     <span class="field-validation-valid" data-valmsg-for="Token" data-valmsg-replace="true"></span>
                                 </em>
                             </li>
-                        
+                         {% endcomment %}
                             <script type="text/javascript">
                                 $(document).ready(function () {
                                     $('#register-button').click(function () {
