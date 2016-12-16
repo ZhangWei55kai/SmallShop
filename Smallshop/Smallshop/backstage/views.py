@@ -2,7 +2,7 @@
 # @Author: zhangwei
 # @Date:   2016-12-10 19:25:35
 # @Last Modified by:   zhangwei
-# @Last Modified time: 2016-12-11 15:25:07
+# @Last Modified time: 2016-12-17 02:37:56
 from django.shortcuts import render,HttpResponse,HttpResponseRedirect
 from django.http import request,JsonResponse
 from forms import MyLogin
@@ -124,3 +124,9 @@ def addTag(request):
 
 
 
+def test(request):
+	if request.method == 'GET':
+		a = Commodity.objects.filter(commodityName=4).all()
+		for i in a:
+			print i.commodityName
+	return HttpResponse('success')

@@ -27,3 +27,14 @@ class ShoppingCart(models.Model):
 	commodity = models.ForeignKey('Commodity')
 	user = models.ForeignKey(FrontUser)
         cartCtime = models.DateField(auto_now_add=True)
+    	buyNum = models.IntegerField(default=1)
+
+
+class UserOrder(models.Model):
+	orderSerial = models.UUIDField(default=uuid.uuid4,editable=False)
+	user = models.ForeignKey(FrontUser)
+	sendStatus = models.BooleanField(default=False)
+	reveiceStatus = models.BooleanField(default=False)
+	buyTime = models.DateTimeField(auto_now_add=True)
+	commodity = models.ForeignKey('Commodity')
+	orderPrice = models.DecimalField(max_digits=12,decimal_places=2)
