@@ -4,7 +4,14 @@
 		<!-- 轮播图 -->
 		<div class="yimi_first_container">
 			<div class="all_cont">
-				<div class="goods_avg_left"></div>
+				<div class="goods_avg_left">
+					<ul class="tag">
+					{% for tag in tags %}
+						<li><a href="#">{{tag.tagName}}</a></li>
+					{%empty%}
+					{% endfor %}
+					</ul>
+				</div>
 				<div class="swiper-container">
 				    <div class="swiper-wrapper">
 				        <div class="swiper-slide yimi_swiper_slide_img"><img src="{% static "img/1478602918219.jpg" %}"></div>
@@ -13,7 +20,12 @@
 				    </div>
 				   <div class="swiper-pagination"></div>
 				</div>
-				<div class="goods_avg_right"></div>
+				<div class="goods_avg_right">
+					<ul class="userInfomation">
+						<li><img class="headImg" src="{{user.headImg}}"></li>
+						<li>Hi!{{user.name}}</li>
+					</ul>
+				</div>
 			</div>
 		</div>
 		<!-- 新上架的商品 -->
@@ -22,46 +34,13 @@
 		</div>
 		<div class="menu">
 				<div class="swiper-wrapper yimi_new_goods">
-					<div class="swiper-slide yimi_swiper_pic">
-						<img src="img/55f90ad3N1f89efad.jpg">
-						<span>泸州老窖</span>
+				{% for commodity in commoditys %}
+				<div class="swiper-slide yimi_swiper_pic">
+						<img src="{{commodity.commodityImg}}">
+						<span>{{commodity.commodityName}}</span>
 					</div>
-					<div class="swiper-slide yimi_swiper_pic">
-						<img src="img/SP_00208186_0_5.jpg">
-						<span>五粮液</span>
-					</div>
-					<div class="swiper-slide yimi_swiper_pic">
-						<img src="img/u=2516915551,1605578428&fm=21&gp=0.jpg">
-						<span>贵州茅台</span>
-					</div>
-					<div class="swiper-slide yimi_swiper_pic">
-						<img src="img/FkahRDZu-iOgQbExarwL8lhiIFog.jpg!280x280.jpg">
-						<span>邵阳老酒</span>
-					</div>
-					<div class="swiper-slide yimi_swiper_pic">
-						<img src="img/u=361590257,2194843121&fm=21&gp=0.jpg">
-						<span>精品国公</span>
-					</div>
-					<div class="swiper-slide yimi_swiper_pic">
-						<img src="img/55f90ad3N1f89efad.jpg">
-						<span>泸州老窖</span>
-					</div>
-					<div class="swiper-slide yimi_swiper_pic">
-						<img src="img/SP_00208186_0_5.jpg">
-						<span>五粮液</span>
-					</div>
-					<div class="swiper-slide yimi_swiper_pic">
-						<img src="img/u=2516915551,1605578428&fm=21&gp=0.jpg">
-						<span>贵州茅台</span>
-					</div>
-					<div class="swiper-slide yimi_swiper_pic">
-						<img src="img/FkahRDZu-iOgQbExarwL8lhiIFog.jpg!280x280.jpg">
-						<span>邵阳老酒</span>
-					</div>
-					<div class="swiper-slide yimi_swiper_pic">
-						<img src="img/u=361590257,2194843121&fm=21&gp=0.jpg">
-						<span>精品国公</span>
-					</div>
+				{%empty%}
+				{% endfor %}
 				</div>
 		</div>
 			<div class="new_commodity"><h2 class="new_title">人气の商品</h2></div>	
@@ -160,7 +139,7 @@
 			</div>
 		</div>
 	</body>
-{% endblock bodyblock %}
+
 	<script type="text/javascript" src="{% static "js/zepto.min.js" %}"></script>
 	<script type="text/javascript" src="{% static "js/swiper.min.js" %}"></script>
 	<script type="text/javascript" src="{% static "js/page.js" %}"></script>
@@ -174,4 +153,5 @@
 	   });
 	   	   		
 	</script>
+{% endblock bodyblock %}
 

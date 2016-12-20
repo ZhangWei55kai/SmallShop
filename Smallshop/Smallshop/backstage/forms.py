@@ -2,7 +2,7 @@
 # @Author: zhangwei
 # @Date:   2016-12-10 18:57:34
 # @Last Modified by:   zhangwei
-# @Last Modified time: 2016-12-12 22:25:56
+# @Last Modified time: 2016-12-17 20:00:35
 from django import forms
 from models import Commodity
 class MyLogin(forms.Form):
@@ -47,3 +47,6 @@ class CategoryForm(forms.Form):
 
 class TagForm(forms.Form):
 	tagName = forms.CharField(max_length=30)
+
+class OrderForm(forms.Form):
+	pass

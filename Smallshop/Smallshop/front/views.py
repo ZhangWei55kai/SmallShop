@@ -7,7 +7,7 @@ from decorators import front_login_required
 from hashs import make_password
 from models import FrontUser
 from backstage.models import UserOrder
-from backstage.models import Commodity,ShoppingCart
+from backstage.models import Commodity,ShoppingCart,CategoryModel,TagModel
 from django.db.models import Q
 import configs
 # Create your views here.
@@ -128,8 +128,23 @@ def addOrder(request):
 @front_login_required
 def front_index(request):
 	if request.method == 'GET':
-		print request.username
-		return render(request,'index.html')
+		userId = request.userId
+		user = FrontUser.objects.filter(pk=userId).first()
+		print user.username
+		catogery = CategoryModel.objects.all()
+		commodity = Commodity.objects.order_by("commodityCtime")
+		tag = TagModel.objects.all()
+		context = {'user':user,
+					'categorys':catogery,
+					'commoditys':commodity,
+					'tags':tag}
+		return render(request,'index.html',context)
+
+def search_index(request,search):
+	if request.method == 'GET':
+		searchResult = Commodity.objects.filter(commodityName__contains=search).all()
+		context={'search':searchResult}
+		return HttpResponse(request,context)
 
 
 

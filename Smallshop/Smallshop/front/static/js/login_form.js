@@ -2,7 +2,7 @@
 * @Author: zhangwei
 * @Date:   2016-12-14 21:09:09
 * @Last Modified by:   zhangwei
-* @Last Modified time: 2016-12-15 00:16:38
+* @Last Modified time: 2016-12-17 20:03:56
 */
 
 'use strict';
@@ -42,3 +42,4 @@ $(document).ready(function(){
 				},
 		});
 	});
+});

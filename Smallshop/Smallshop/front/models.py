@@ -16,6 +16,7 @@ class FrontUser(models.Model):
 	vipLevel = models.IntegerField(default=0)
 	createtime = models.DateField(auto_now_add=True)
 	balance = models.DecimalField(default=0,decimal_places=2,max_digits=12,)
+	headImg = models.URLField(max_length=100)
 	
 	#首次save的时候保存加密并传入init方法
 	def __init__(self,*args,**kwargs):
