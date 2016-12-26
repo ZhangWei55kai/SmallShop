@@ -2,8 +2,8 @@
 # @Author: zhangwei
 # @Date:   2016-12-10 19:25:35
 # @Last Modified by:   zhangwei
-# @Last Modified time: 2016-12-17 02:37:56
-from django.shortcuts import render,HttpResponse,HttpResponseRedirect
+# @Last Modified time: 2016-12-26 23:10:30
+from django.shortcuts import render,HttpResponse,HttpResponseRedirect,reverse,redirect
 from django.http import request,JsonResponse
 from forms import MyLogin
 from django.contrib.auth.models import User
@@ -11,11 +11,12 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login,logout,authenticate
 from models import Commodity,CategoryModel,TagModel
 from forms import CommodityForm,CategoryForm,TagForm
+from django.core import serializers
 # Create your views here.
 
 def index_login(request):
 	if request.method=='GET':
-		return render(request,'index.html')
+		return render(request,'cms_login.html')
 	else:
 		form = MyLogin(request.POST)
 		if form.is_valid():	#检验是否合法
@@ -27,7 +28,7 @@ def index_login(request):
 			user = authenticate(username=username,password=password)
 			if user:
 				login(request,user)
-				return HttpResponseRedirect(reverse('login'))
+				return HttpResponse(u'登陆成功')
 			else:
 				return HttpResponse(u'登录失败!')
 		else:
@@ -45,9 +46,9 @@ def set_pwd(request):
 	return HttpResponse(u'update pwd OK')
 
 def index_logout(request):
-	if request.method=='POST':
+	if request.method=='GET':
 		logout(request)
-	return render(request,'end.html',{'user':request.user})
+	return redirect(reverse('index_login'))
 
 
 
@@ -61,7 +62,15 @@ def errorMess(error):
 # @login_required
 def createCommodity(request):
 	if request.method == 'GET':
-		return render(request,'html')
+		commodity = Commodity.objects.all()
+		# print  Commodity.tagModel_set.all()
+		category = CategoryModel.objects.all()
+		
+		tags = TagModel.objects.all()
+		context = {'commodity':commodity,
+		'tags':tags,
+		'category':category}
+		return render(request,'commodity.html',context)
 	else:
 		commodity = CommodityForm(request.POST)
 		if commodity.is_valid():
@@ -71,15 +80,16 @@ def createCommodity(request):
 			commodityStock = commodity.cleaned_data.get('commodityStock',None) 
 			commodityPrice = commodity.cleaned_data.get('commodityPrice',None) 
 			categoryId = commodity.cleaned_data.get('categoryId',None)
-			tag = request.POST.getlist('tags',None)
-			print tag
+			points = commodity.cleaned_data.get('points',None)
+			tag = request.POST.getlist('tags[]',None)
 			category = CategoryModel.objects.filter(pk=categoryId).first()
 			commodityModel = Commodity(commodityName=commodityName,
 				commodityDes=commodityDes,
 				commodityImg=commodityImg,
 				commodityStock=commodityStock,
 				commodityPrice=commodityPrice,
-				commondityCate=category
+				commondityCate=category,
+				commodityPoints=points,
 				)
 			commodityModel.save()
 			tagModel = TagModel.objects.filter(pk__in=tag)
@@ -89,9 +99,41 @@ def createCommodity(request):
 			return JsonResponse({'error':errorMess(commodity.errors)})
 
 
+def editCommodity(request,commodityId):
+	if request.method=='GET':
+		commodity= serializers.serialize('json',Commodity.objects.filter(uid=commodityId))
+		return JsonResponse({'message':commodity})
+	else:
+		commodity = CommodityForm(request.POST)
+		if commodity.is_valid():
+			commodityName = commodity.cleaned_data.get('commodityName',None) 
+			commodityDes = commodity.cleaned_data.get('commodityDes',None) 
+			commodityImg = commodity.cleaned_data.get('commodityImg',None) 
+			commodityStock = commodity.cleaned_data.get('commodityStock',None) 
+			commodityPrice = commodity.cleaned_data.get('commodityPrice',None) 
+			categoryId = commodity.cleaned_data.get('categoryId',None)
+			points = commodity.cleaned_data.get('points',None)
+			tag = request.POST.getlist('tags[]',None)
+			category = CategoryModel.objects.filter(pk=categoryId).first()
+			commodityModel = Commodity(commodityName=commodityName,
+				commodityDes=commodityDes,
+				commodityImg=commodityImg,
+				commodityStock=commodityStock,
+				commodityPrice=commodityPrice,
+				commondityCate=category,
+				commodityPoints=points,
+				)
+			commodityModel.save()
+			tagModel = TagModel.objects.filter(pk__in=tag)
+			commodityModel.commondityTag.set(tagModel)
+			return JsonResponse({'message':u'保存成功'})
+		else:
+			return JsonResponse({'error':errorMess(commodity.errors)})
 # @login_required
 def addCategory(request):
-	if request.method == 'POST':
+	if request.method == 'GET':
+		return render(request,'add_category.html')
+	else:
 		form = CategoryForm(request.POST)
 		if form.is_valid():
 			categoryName = form.cleaned_data.get('categoryName',None)
@@ -108,7 +150,9 @@ def addCategory(request):
 
 # @login_required
 def addTag(request):
-	if request.method == 'POST':
+	if request.method == 'GET':
+		return render(request,'add_tag.html')
+	else:
 		form = TagForm(request.POST)
 		if form.is_valid():
 			tagName = form.cleaned_data.get('tagName',None)
@@ -122,7 +166,9 @@ def addTag(request):
 		else:
 			return JsonResponse({'error':errorMess(form.errors)})
 
-
+def back_index(request):
+	if request.method == 'GET':
+		return render(request,'cms_index.html')
 
 def test(request):
 	if request.method == 'GET':

@@ -1,0 +1,26 @@
+{% load static%}
+<!DOCTYPE html>
+<html lang="en">
+	{% block headblock %}
+    <head>
+        <meta charset="utf-8">
+        <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+        <script src="http://cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>
+        <script src='{% static "js/bootstrap.min.js" %}'></script>
+        <script src="{% static "js/nav.js" %}"></script>
+        <link rel="stylesheet" type="text/css" href="{% static "css/setting.css" %}">
+        <script src="{% static "js/csrftoken.js" %}"></script>
+        <script src='{% static "js/create_com.js" %}'></script>
+        <link rel="stylesheet" type="text/css" href="{% static "css/login.css" %}">
+        <title>{% block titleblock %}{% endblock titleblock %}</title>
+        {% block jsblock %}{% endblock jsblock %}
+        <style type="text/css">
+            *{font-family: microsoft yahei;font-weight: bold;}
+        </style>
+    </head>		
+    {% endblock headblock %}
+    <body>
+    {% block bodyblock %}
+    {% endblock bodyblock %}
+    </body>
+</html>

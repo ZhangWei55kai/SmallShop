@@ -15,7 +15,7 @@ class Commodity(models.Model):
 	commondityCate = models.ForeignKey('CategoryModel')
 	commondityTag = models.ManyToManyField('TagModel',blank=True)
 	commodityPoints = models.IntegerField()
-
+	
 class CategoryModel(models.Model):
 	name = models.CharField(max_length=20,unique=True)
 

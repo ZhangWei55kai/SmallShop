@@ -1,0 +1,26 @@
+{% extends "bootstrap.html" %}
+{% load static%}
+{% block jsblock %}
+<link rel="stylesheet" type="text/css" href='{% static "css/login.css" %}'>
+<script src="{% static "js/csrftoken.js" %}"></script>
+<script src="{% static "js/cms_login_form.js" %}"></script>
+{% endblock jsblock %}
+{% block titleblock %}登陆{% endblock titleblock %}
+{% block bodyblock %}
+<div class="containe">
+    <form class="form-signin" role="form" action="" method="POST">
+    {% csrf_token %}
+        <h2 class="form-signin-heading">请登录</h2>
+        <input type="text" class="form-control username" placeholder="用户名" required name="username">
+        <input type="password" class="form-control password" placeholder="密码" required name="password">
+        <div class="alert alert-danger tanchu" role="alert"></div>
+        <div class="checkbox">
+	        <label>
+	            <input type="checkbox" value="remember-me" name="remember" class="remember"> 记住我
+	        </label>
+        </div>
+        <button class="btn btn-lg btn-primary btn-block sub" type="submit">登陆</button>
+     </form>
+</div> <!-- /container -->	
+{% endblock bodyblock %}
+</html>

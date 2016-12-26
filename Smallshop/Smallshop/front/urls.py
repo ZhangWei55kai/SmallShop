@@ -2,7 +2,7 @@
 # @Author: zhangwei
 # @Date:   2016-12-12 22:19:30
 # @Last Modified by:   zhangwei
-# @Last Modified time: 2016-12-19 20:25:32
+# @Last Modified time: 2016-12-21 18:39:58
 from django.conf.urls import url,include
 from django.contrib import admin
 from views import front_login,front_register,front_logout,shopCart,addShopCart,front_index,addOrder,search_index

@@ -2,7 +2,7 @@
 # @Author: zhangwei
 # @Date:   2016-12-10 18:57:34
 # @Last Modified by:   zhangwei
-# @Last Modified time: 2016-12-17 20:00:35
+# @Last Modified time: 2016-12-22 21:34:51
 from django import forms
 from models import Commodity
 class MyLogin(forms.Form):
@@ -16,6 +16,7 @@ class CommodityForm(forms.Form):
 	commodityStock = forms.IntegerField()
 	commodityPrice = forms.DecimalField()
 	categoryId = forms.IntegerField(required=True)
+	points = forms.IntegerField(required=True)
 
 	def clean_commodityName(self):
 		commodityName = self.cleaned_data.get('commodityName',None)

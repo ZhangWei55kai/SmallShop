@@ -2,7 +2,7 @@
 * @Author: zhangwei
 * @Date:   2016-12-17 21:12:57
 * @Last Modified by:   zhangwei
-* @Last Modified time: 2016-12-19 20:36:53
+* @Last Modified time: 2016-12-22 10:03:21
 */
 
 'use strict';
@@ -19,11 +19,14 @@ window.onload=function(){
 $(function(){
 	$('.buttom_a').click(function(event){
 		var search = $('.search').val()
+		if(!search){
+			search=','
+		};
 		$.ajax({
 			'url':'/front/search/'+search,
 			'type':'GET',
 			'success':function(data){
-				console.log(data)
+				window.location.href='/front/search/'+search
 			},
 			'error':function(error){
 					console.log(error);

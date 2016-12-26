@@ -1,0 +1,20 @@
+{% extends "front_base.html" %}
+{% block titleblock %}
+分类管理
+{% endblock titleblock %}
+{% block bodyblock %}
+	{{block.super}}
+	<div style="clear:both;"></div>
+    <div style="height: 200px;background:pink; padding:100px;">
+        <form role="form" action="" method="POST">
+        {% csrf_token %}
+				<div class="form-group">
+					     <label for="name">商品分类</label>
+					     <input type="text" class="form-control" id="categoryName" name='categoryName' placeholder="商品分类">
+				</div>
+				<button type="submit" class="btn btn-primary">
+					提交并保存
+			</button>
+		</form>
+    </div>
+{% endblock bodyblock %}
