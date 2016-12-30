@@ -143,8 +143,9 @@ def front_index(request):
 def search_index(request,search):
 	if request.method == 'GET':
 		searchResult = Commodity.objects.filter(commodityName__contains=search).all()
-		context={'search':searchResult}
-		return HttpResponse(request,context)
+		catogery = CategoryModel.objects.all()
+		context={'search':searchResult,'categorys':catogery}
+		return render(request,'base_index.html',context)
 
 
 

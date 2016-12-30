@@ -38,7 +38,7 @@
         		<td>{{com.commodityCtime|date:"Y-m-d"}}</td>
         		<td>{{com.commondityCate.name}}</td>
         		<td>{{com.commodityPoints}}</td>
-        		<td><a href="{% url 'b_editCommodity' commodityId=com.pk %}" data-toggle="modal" data-target="#eDModal">编辑</a> | <a href="">删除</a></td>
+        		<td><a class="editcom" href="" id="{{com.uid}}"data-toggle="modal" data-target="#eDModal">编辑</a> | <a href="">删除</a></td>
 
         	</tr>
         	{%empty%}
@@ -124,27 +124,28 @@
 				</button>
 				<h4 class="modal-title" id="myModalLabel">
 					编辑商品
+					<input type="hidden" name="" value="" class="editid">
 				</h4>
 			</div>
 			<div class="modal-body">
 				<form role="form" method="POST">
 				    <div class="form-group">
 					     <label for="name">商品名称</label>
-					     <input type="text" class="form-control" id="commodityName" placeholder="商品名称">
+					     <input type="text" class="form-control" id="E_commodityName" placeholder="商品名称">
 				    </div>
 				    <div class="form-group">
 				    	<label for="name">商品标签</label>
 				    	<div class="checkbox">
 					    {% for tag in tags %}
-					    <label>
-					    	<input type="checkbox" value="{{tag.id}}" name='tags' id='tag'>{{tag.tagName}}
+					    <label class="checktag">
+					    	<input type="checkbox" value="{{tag.id}}" name='tags' id='{{tag.id}}' class="eTag">{{tag.tagName}}
 					    </label>  	
 					    {%empty%}
 					    {% endfor %}
 				    </div>
 				    <div class="form-group">
 					     <label for="name">商品分类</label>
-					     <select id='categoryId' class="form-control">
+					     <select id='E_categoryId' class="form-control">
 					     <option>请选择</option>
 					     {% for cate in category %}
 						  <option value='{{cate.id}}' name='categoryId' >{{cate.name}}</option>
@@ -153,30 +154,30 @@
 				    </div>
 				    <div class="form-group">
 					     <label for="name">商品图片</label>
-					     <input type="text" class="form-control"  id='commodityImg' placeholder="商品图片" name="commodityImg">
+					     <input type="text" class="form-control"  id='E_commodityImg' placeholder="商品图片" name="commodityImg">
 				    </div>
 				    <div class="form-group">
 					     <label for="name">商品库存</label>
-					     <input type="text" class="form-control" placeholder="商品库存" name='commodityStock' id='commodityStock'>
+					     <input type="text" class="form-control" placeholder="商品库存" name='commodityStock' id='E_commodityStock'>
 				    </div>
 				    <div class="form-group">
 					     <label for="name">商品价格</label>
-					     <input type="text" class="form-control" placeholder="商品价格"name='commodityPrice' id='commodityPrice'>
+					     <input type="text" class="form-control" placeholder="商品价格"name='commodityPrice' id='E_commodityPrice'>
 				    </div>
 				    <div class="form-group">
 					     <label for="name">商品积分</label>
-					     <input type="text" class="form-control" placeholder="商品积分"name='points' id='points'>
+					     <input type="text" class="form-control" placeholder="商品积分"name='points' id='E_points'>
 				    </div>
 				    <div class="form-group">
 						<label for="name">商品描述</label>
-						<textarea id='commodityDes' class="form-control" rows="3"></textarea>
+						<textarea id='E_commodityDes' class="form-control" rows="3"></textarea>
 					</div>
 				  	</div>
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">关闭
 				</button>
-				<button id='submit_c' type="button" class="btn btn-primary">
+				<button id='submit_e' type="button" class="btn btn-primary">
 					提交并保存
 				</button>
 			</form>
